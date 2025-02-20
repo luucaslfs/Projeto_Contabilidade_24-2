@@ -1,0 +1,36 @@
+services:
+  web:
+    build: .
+    develop:
+      watch:
+        - path: ./requirements.txt
+          action: rebuild
+        - path: ./src
+          target: /app/src
+          action: sync
+        - path: ./migrations
+          target: /app/migrations
+          action: sync
+        - path: ./alembic.ini
+          target: /app/alembic.ini
+          action: sync
+    ports:
+      - "8501:8501"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/agency_accounting
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=agency_accounting
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
