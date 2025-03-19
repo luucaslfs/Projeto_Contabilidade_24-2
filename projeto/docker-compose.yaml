@@ -1,6 +1,7 @@
 services:
   web:
     build: .
+    restart: unless-stopped
     develop:
       watch:
         - path: ./requirements.txt
@@ -19,10 +20,12 @@ services:
     environment:
       - DATABASE_URL=postgresql://user:password@db:5432/agency_accounting
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:14-alpine
+    restart: unless-stopped
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
@@ -31,6 +34,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d agency_accounting"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:
