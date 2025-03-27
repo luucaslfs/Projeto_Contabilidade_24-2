@@ -79,6 +79,29 @@ if st.button("Obter Metadados"):
                         st.write("**Colunas:**")
                         for column in columns:
                             st.write(f"- {column['name']} ({column['type']})")
+                        
+                        # Obtém as chaves primárias
+                        pk = inspector.get_pk_constraint(table)
+                        if pk['constrained_columns']:
+                            st.write("**Chave Primária:**")
+                            st.write(f"- {', '.join(pk['constrained_columns'])}")
+                        
+                        # Obtém as chaves estrangeiras
+                        fks = inspector.get_foreign_keys(table)
+                        if fks:
+                            st.write("**Chaves Estrangeiras:**")
+                            for fk in fks:
+                                st.write(f"- {', '.join(fk['constrained_columns'])} → {fk['referred_table']}.{', '.join(fk['referred_columns'])}")
+                        
+                        # Contagem de registros
+                        try:
+                            count_query = text(f"SELECT COUNT(*) FROM {table}")
+                            with engine.connect() as conn:
+                                result = conn.execute(count_query)
+                                count = result.scalar()
+                            st.write(f"**Total de registros:** {count}")
+                        except Exception as e:
+                            st.write(f"**Erro ao contar registros:** {str(e)}")
             else:
                 st.warning("⚠️ Banco conectado, mas sem tabelas!")
         except Exception as e:
@@ -137,6 +160,24 @@ try:
 except:
     st.info("ℹ️ Não foi possível determinar se está executando em Docker")
 
+# Inicialização do banco
+st.subheader("Inicialização do Banco")
+
+if st.button("Inicializar Banco de Dados"):
+    with st.spinner("Inicializando banco de dados..."):
+        try:
+            # Importa a função diretamente
+            from init_db import init_db
+            
+            success = init_db()
+            if success:
+                st.success("✅ Banco de dados inicializado com sucesso!")
+            else:
+                st.error("❌ Falha ao inicializar o banco de dados.")
+        except Exception as e:
+            st.error(f"❌ Erro ao inicializar banco: {str(e)}")
+            st.code(str(e))
+
 st.write("**Instruções para Debug:**")
 st.info("""
 1. Verifique se o container do PostgreSQL está rodando
@@ -147,4 +188,4 @@ st.info("""
 
 # Adiciona botão para reiniciar a página
 if st.button("Reiniciar Diagnóstico"):
-    st.experimental_rerun() 
+    st.experimental_rerun()
