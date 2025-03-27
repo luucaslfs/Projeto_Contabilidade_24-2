@@ -62,3 +62,27 @@ class Fatura(Base):
     # Relacionamentos
     cliente = relationship("Cliente", back_populates="faturas")
     servico = relationship("Servico", back_populates="faturas")
+
+class PlanoContas(Base):
+    __tablename__ = 'plano_contas'
+    
+    codigo = Column(String(20), primary_key=True)
+    descricao = Column(String(200), nullable=False)
+    
+class MovimentacaoBancaria(Base):
+    __tablename__ = 'movimentacoes'
+    
+    id = Column(Integer, primary_key=True)
+    filial = Column(String(10), nullable=False)
+    data = Column(Date, nullable=False)
+    banco = Column(String(10))
+    agencia = Column(String(10))
+    conta = Column(String(20))
+    natureza = Column(String(20), ForeignKey('plano_contas.codigo'))
+    documento = Column(String(50))
+    entrada = Column(Float, nullable=True)
+    saida = Column(Float, nullable=True)
+    historico = Column(String(500))
+    
+    # Relacionamento
+    conta_natureza = relationship("PlanoContas")
