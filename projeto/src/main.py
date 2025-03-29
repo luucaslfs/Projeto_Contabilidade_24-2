@@ -9,61 +9,92 @@ st.set_page_config(
 st.title("Sistema de Gestão Contábil para Agência de Publicidade")
 
 st.write("""
-### Bem-vindo ao sistema!
-
-Este projeto gerencia a contabilidade para agências de publicidade, implementando conceitos de:
-
-- **Pereira da Silva, J.** - "Análise Financeira das Empresas" (13ª edição, Cengage Learning, 2017)
-- **Martins, E.** - "Contabilidade de Custos" (11ª edição, GEN/Atlas, 2018)
-
-O sistema permite controlar:
-- Receitas e despesas
-- Análise de custos fixos e variáveis
-- Visualização de indicadores financeiros
-- Relatórios contábeis
+O sistema permite analisar dados financeiros da agência, com foco em:
+- Análise Vertical de receitas e despesas
+- Classificação de custos fixos e variáveis
+- Índices financeiros e de liquidez
+- Análise de tendências e sazonalidade
 """)
 
-# Cards de navegação rápida
-st.subheader("Navegação Rápida")
+# Cards para navegação rápida
+st.markdown("### Acesso Rápido às Funcionalidades")
 
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.info("📊 **Dashboard Financeiro**\n\nVisualize métricas, gráficos e indicadores financeiros baseados nos conceitos de contabilidade estudados.")
-    if st.button("Acessar Dashboard", key="dashboard"):
-        st.switch_page("pages/dashboard_financeiro.py")
-
-with col2:
-    st.info("👥 **Cadastro de Clientes**\n\nGerencie os dados dos seus clientes e veja todos os registros.")
-    if st.button("Gerenciar Clientes", key="clientes"):
-        st.switch_page("pages/cadastro_cliente.py")
-
-with col3:
-    st.info("📋 **Importação de Dados**\n\nImporte dados de planilhas e visualize movimentações bancárias.")
-    if st.button("Importar Dados", key="importar"):
-        st.switch_page("pages/importacao_dados.py")
-
-# Segunda linha de cards
 col1, col2 = st.columns(2)
 
 with col1:
-    st.info("🔍 **Status do Banco**\n\nVerifique a conexão e o status do banco de dados.")
-    if st.button("Verificar Banco", key="banco"):
-        st.switch_page("pages/db_status.py")
+    st.info("""
+    ### 📥 Importação de Dados
+    
+    Importe seus dados financeiros de planilhas CSV para análise no sistema.
+    
+    - Movimentações bancárias
+    - Plano de contas
+    - Categorizações automáticas
+    """)
+    
+    if st.button("Importar Dados", type="primary", key="import"):
+        st.switch_page("pages/Importar_Dados.py")
 
 with col2:
-    st.success("📚 **Conceitos Aplicados**\n\nO sistema implementa diversos conceitos contábeis como análise vertical, classificação de custos fixos e variáveis, fluxo de caixa e indicadores financeiros.")
+    st.success("""
+    ### 📊 Dashboard Financeiro
+    
+    Visualize métricas e gráficos baseados nos conceitos contábeis.
+    
+    - Indicadores financeiros
+    - Análise vertical
+    - Estrutura de custos
+    - Tendências de faturamento
+    """)
+    
+    if st.button("Acessar Dashboard", type="primary", key="dashboard"):
+        st.switch_page("pages/Dashboard_Financeiro.py")
 
-# Rodapé com referências bibliográficas
+# Seção de conceitos contábeis aplicados
 st.markdown("---")
-st.write("""
-### Funcionalidades Implementadas:
+st.markdown("## Conceitos Contábeis Aplicados")
 
-- **Análise Vertical**: Baseada em Pereira da Silva (2017)
-- **Classificação de Custos**: Fixos vs. Variáveis (Martins, 2018)
-- **Índice de Fixação de Despesas**: Indicador de rigidez operacional 
-- **Fluxo de Caixa**: Monitoramento de entradas, saídas e saldo acumulado
-- **Visualizações**: Gráficos interativos para análise financeira
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("""
+    ### Pereira da Silva (2017)
+    
+    - **Análise Vertical**: Representa cada componente financeiro como percentual de um valor base (receita total)
+    
+    - **Margem Líquida**: Percentual da receita que se converte em lucro após despesas
+    
+    - **Análise de Liquidez**: Capacidade da empresa de honrar seus compromissos financeiros
+    
+    - **Análise de Tendência**: Evolução dos indicadores financeiros ao longo do tempo
+    """)
+
+with col2:
+    st.markdown("""
+    ### Martins (2018)
+    
+    - **Custos Fixos vs. Variáveis**: Classificação dos custos conforme sua relação com o volume de serviços
+    
+    - **Índice de Fixação**: Proporção de custos fixos em relação ao total, indicando rigidez operacional
+    
+    - **Análise de Produtividade**: Métricas como receita por hora e custo por serviço
+    
+    - **Composição de Custos**: Estrutura de custos e seu impacto nas decisões gerenciais
+    """)
+
+# Rodapé com informações adicionais
+st.markdown("---")
+st.markdown("""
+### Relatórios Disponíveis
+
+O sistema permite gerar relatórios detalhados a partir dos dados analisados:
+
+- **Demonstrativo de Resultado**: Análise vertical de receitas e despesas
+- **Análise de Custos**: Custos fixos vs. variáveis e índice de fixação
+- **Relatório de Faturamento**: Evolução mensal e por tipo de serviço
+- **Índices Financeiros**: Margem, liquidez e produtividade
+
+Para gerar relatórios, acesse o Dashboard Financeiro e clique no botão "Gerar Relatório PDF" no menu lateral.
 """)
 
-st.caption("Projeto de Gestão Contábil - Agência de Publicidade © 2025")
+st.caption("© 2025 Sistema de Gestão Contábil - Projeto Acadêmico")
