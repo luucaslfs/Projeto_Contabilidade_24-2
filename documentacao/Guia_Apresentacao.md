@@ -1,240 +1,107 @@
-# Sistema de Gestão Contábil para Agência de Publicidade
-## Guia para Apresentação do Projeto
+# Guia de Apresentação do Sistema de Gestão Contábil
 
-Este documento serve como guia para a apresentação do projeto de Sistema de Gestão Contábil, desenvolvido para a disciplina de Contabilidade do curso de Sistemas de Informação. Ele detalha os conceitos contábeis implementados, as visualizações criadas e como explicar cada elemento durante a apresentação.
+Este guia apresenta os principais pontos para demonstração do Sistema de Gestão Contábil para Agência de Publicidade, com foco na implementação dos conceitos de Pereira da Silva (2017) e Martins (2018).
 
-## Sumário
+## 1. Visão Geral da Aplicação
 
-1. [Visão Geral do Projeto](#visão-geral-do-projeto)
-2. [Implementações Técnicas](#implementações-técnicas)
-3. [Conceitos Contábeis Aplicados](#conceitos-contábeis-aplicados)
-4. [Dashboard Financeiro](#dashboard-financeiro)
-5. [Roteiro para Apresentação](#roteiro-para-apresentação)
+### Estrutura do Sistema
+- **Página Inicial**: Apresentação do sistema e acesso às funcionalidades principais
+- **Importação de Dados**: Módulo para importar movimentações financeiras
+- **Dashboard Financeiro**: Visualizações e métricas baseadas em conceitos contábeis
 
----
+### Conceitos Implementados
+- **Análise Vertical** (Pereira da Silva, 2017)
+- **Estrutura de Custos Fixos e Variáveis** (Martins, 2018)
+- **Indicadores de Rentabilidade e Liquidez** (Pereira da Silva, 2017)
+- **Análise de Tendências** (Pereira da Silva, 2017)
 
-## Visão Geral do Projeto
+## 2. Demonstração do Dashboard
 
-O projeto consiste em um sistema de gestão contábil para agências de publicidade, que permite:
+### Aba "Visão Geral"
 
-- Importar dados financeiros de planilhas CSV
-- Classificar automaticamente movimentações em categorias contábeis
-- Diferenciar entre custos fixos e variáveis
-- Analisar o fluxo de caixa e resultados financeiros
-- Visualizar indicadores de desempenho através de dashboards
+#### Indicadores Financeiros
+- **Como apresentar**: "Estes indicadores são baseados na metodologia de Pereira da Silva para análise financeira, mostrando receitas, despesas e margens."
+- **Destaque**: "A margem de lucro de X% significa que para cada R$100 em receita, R$X se convertem em lucro líquido."
 
-O sistema foi implementado com base nos conceitos contábeis das obras de:
-- **Pereira da Silva, J.** - "Análise Financeira das Empresas" (13ª edição, Cengage Learning, 2017)
-- **Martins, E.** - "Contabilidade de Custos" (11ª edição, GEN/Atlas, 2018)
+#### Evolução Financeira (Gráfico de Receitas vs Despesas)
+- **Como apresentar**: "Este gráfico ilustra a análise temporal proposta por Pereira da Silva, permitindo identificar tendências e sazonalidades."
+- **Destaque**: "Observe como nos meses de [identificar padrão], temos [crescimento/queda] consistente nas receitas."
 
----
+#### Análise Vertical
+- **Como apresentar**: "Esta visualização implementa diretamente o conceito de Análise Vertical de Pereira da Silva."
+- **Destaque**: "Podemos ver que a categoria [X] representa Y% da receita total, o que indica [conclusão relevante]."
 
-## Implementações Técnicas
+### Aba "Análise de Custos"
 
-### Arquitetura do Sistema
+#### Estrutura de Custos
+- **Como apresentar**: "Segundo Martins (2018), a classificação em custos fixos e variáveis é fundamental para decisões gerenciais."
+- **Destaque**: "O Índice de Fixação de X% indica que a estrutura de custos da agência é [flexível/rígida]."
 
-- **Frontend/Backend**: Python com Streamlit
-- **Banco de Dados**: PostgreSQL
-- **ORM**: SQLAlchemy
-- **Visualizações**: Plotly
-- **Containerização**: Docker
+#### Composição de Custos (Gráfico de Pizza)
+- **Como apresentar**: "Esta visualização mostra a estrutura de custos fixos vs. variáveis conforme Martins (2018)."
+- **Destaque**: "Um percentual [alto/baixo] de custos fixos implica em [consequências para o negócio]."
 
-### Principais Melhorias Implementadas
+#### Despesas por Categoria
+- **Como apresentar**: "Esta análise complementa a visão de Martins sobre categorização de custos."
+- **Destaque**: "As categorias [X, Y e Z] representam a maior parte das despesas, sendo pontos críticos para controle."
 
-1. **Tratamento Avançado de Dados**
-   - Conversão de tipos de dados (datas, valores monetários)
-   - Classificação automática de naturezas contábeis
-   - Identificação de custos fixos e variáveis
-   - Extração de informações adicionais dos históricos
+### Aba "Análise de Faturamento"
 
-2. **Modelo de Dados Expandido**
-   - Categorização contábil mais granular
-   - Novos campos para análise de custos
-   - Campos para entidades relacionadas e documentos
+#### Faturamento Mensal
+- **Como apresentar**: "A análise de tendência, conforme Pereira da Silva, permite projeções e planejamento financeiro."
+- **Destaque**: "Note o padrão de [crescimento/sazonalidade] que pode ser usado para previsões futuras."
 
-3. **Interface de Importação Aprimorada**
-   - Validação de dados de entrada
-   - Prévia dos dados antes da importação
-   - Resumo dos dados já importados
+#### Faturamento por Tipo de Serviço
+- **Como apresentar**: "Esta análise permite identificar quais serviços são mais rentáveis para a agência."
+- **Destaque**: "O serviço [X] representa Y% do faturamento total, demonstrando sua importância estratégica."
 
-4. **Dashboard Financeiro Otimizado**
-   - Múltiplas visualizações de dados
-   - Filtros por período, filial e categoria
-   - Divisão em abas para diferentes análises
+#### Análise de Faturas e Liquidez
+- **Como apresentar**: "Pereira da Silva enfatiza a importância da análise de liquidez para a saúde financeira."
+- **Destaque**: "O Índice de Liquidez de X.XX indica que a agência [tem/não tem] boa capacidade de honrar compromissos de curto prazo."
 
----
+## 3. Pontos-Chave para Ressaltar
 
-## Conceitos Contábeis Aplicados
+### De Pereira da Silva (2017)
+1. **Análise Vertical como ferramenta gerencial**:
+   - "A análise vertical permite identificar quais componentes têm maior impacto proporcional no resultado"
+   - "Facilita a priorização de ações para melhorar a rentabilidade"
 
-### Baseados em Pereira da Silva (2017)
+2. **Interpretação de margens**:
+   - "A margem de X% está [acima/abaixo] da média do setor de publicidade"
+   - "Indica que a precificação dos serviços está [adequada/inadequada]"
 
-1. **Análise Vertical**
-   - Representação proporcional de receitas e despesas
-   - Identificação dos componentes com maior impacto no resultado
+3. **Liquidez e gestão de recebíveis**:
+   - "O monitoramento de faturas pendentes é crucial para o fluxo de caixa"
+   - "Um índice de liquidez saudável permite melhor planejamento financeiro"
 
-2. **Indicadores Financeiros**
-   - Margem Líquida: percentual da receita que se converte em lucro
-   - EBITDA: resultado operacional antes de juros, impostos, depreciação e amortização
-   - Indicadores de Liquidez: capacidade de honrar compromissos financeiros
+### De Martins (2018)
+1. **Impacto da estrutura de custos nas decisões**:
+   - "Custos fixos elevados exigem volume maior de serviços para atingir o ponto de equilíbrio"
+   - "Em momentos de queda na demanda, custos variáveis proporcionam maior flexibilidade"
 
-3. **Fluxo de Caixa**
-   - Monitoramento de entradas e saídas
-   - Projeção de saldo acumulado
-   - Análise de sazonalidade
+2. **Produtividade como fator de rentabilidade**:
+   - "A receita por hora é um indicador direto da eficiência operacional"
+   - "Melhorar este indicador impacta diretamente a lucratividade"
 
-### Baseados em Martins (2018)
+3. **Classificação de custos para precificação**:
+   - "Conhecer a estrutura de custos permite precificação mais precisa dos serviços"
+   - "Ajuda a identificar serviços menos rentáveis que precisam ser ajustados"
 
-1. **Classificação de Custos**
-   - **Custos Fixos**: independem do volume de atividade (aluguel, salários administrativos)
-   - **Custos Variáveis**: relacionados diretamente ao volume de serviços prestados
+## 4. Conclusão da Apresentação
 
-2. **Índice de Fixação de Despesas**
-   - Proporção de custos fixos em relação ao total
-   - Indicador de rigidez operacional
-
-3. **Análise de Ponto de Equilíbrio**
-   - Receita necessária para cobrir todos os custos
-   - Margem de contribuição para cobrir custos fixos
+- Destaque como o sistema traduz conceitos teóricos em ferramentas práticas de gestão
+- Enfatize o valor dos indicadores visuais para tomada de decisão
+- Mostre como a geração de relatórios permite compartilhar análises com stakeholders
+- Mencione possíveis evoluções futuras (análises preditivas, integração com outras ferramentas, etc.)
 
 ---
 
-## Dashboard Financeiro
+## Glossário de Conceitos para Referência Rápida
 
-O dashboard foi organizado em quatro abas, cada uma com visualizações específicas relacionadas aos conceitos contábeis estudados:
-
-### 1. Visão Geral
-
-**Indicadores do Período**
-- Receitas Totais
-- Despesas Totais
-- Resultado do Período
-- Custos Fixos e Variáveis
-- Índice de Fixação de Despesas
-
-**Indicadores Mensais**
-- Gráfico que combina receitas, despesas e margem (%)
-- Aplicação do conceito de Margem de Pereira da Silva (2017)
-
-**Distribuição por Categorias**
-- Gráficos de pizza mostrando a composição de receitas e despesas
-- Análise visual baseada na classificação contábil
-
-### 2. Análise Detalhada
-
-**Análise por Filial**
-- Comparativo de desempenho entre filiais
-- Entradas, saídas e resultado por unidade de negócio
-
-**Custos Fixos vs. Variáveis**
-- Evolução mensal dos custos por natureza
-- Percentual de custos fixos ao longo do tempo
-- Implementação direta dos conceitos de Martins (2018)
-
-**Sazonalidade**
-- Padrões recorrentes de receitas e despesas por mês
-- Suporte para planejamento financeiro
-
-### 3. Fluxo de Caixa
-
-**Fluxo de Caixa Mensal**
-- Entradas e saídas por mês
-- Saldo mensal e acumulado
-- Visualização para análise de liquidez
-
-**Timeline de Movimentações**
-- Visão cronológica detalhada
-- Tamanho dos pontos proporcional aos valores
-- Análise da evolução do saldo ao longo do tempo
-
-**Movimentações Recentes**
-- Tabela detalhada com as últimas transações
-
-### 4. Detalhamento por Categoria
-
-**Treemap de Receitas e Despesas**
-- Visualização hierárquica por categoria e natureza
-- Análise proporcional dos valores
-- Identificação rápida dos principais componentes do resultado
-
----
-
-## Roteiro para Apresentação
-
-### 1. Introdução (2-3 minutos)
-
-- Apresente o objetivo do sistema: gestão contábil para agências de publicidade
-- Mencione as obras de referência (Pereira da Silva e Martins)
-- Destaque que o sistema permite importação de dados reais e visualizações avançadas
-
-### 2. Importação e Tratamento de Dados (3-4 minutos)
-
-- Demonstre a tela de importação de CSV
-- Explique como o sistema categoriza automaticamente as despesas
-- Mostre como distingue custos fixos e variáveis (conceito de Martins)
-
-### 3. Dashboard Financeiro (10-15 minutos)
-
-**Aba Visão Geral:**
-- Explique os indicadores principais:
-  - "A Margem Líquida de x% significa que para cada R$100 de receita, R$x se converte em lucro"
-  - "O Índice de Fixação de Despesas de y% indica que a empresa tem uma estrutura de custos relativamente rígida/flexível"
-
-- Ao mostrar a distribuição por categorias, destaque:
-  - "Esta visualização implementa o conceito de Análise Vertical de Pereira da Silva, mostrando a proporção de cada componente no total"
-
-**Aba Análise Detalhada:**
-- Ao mostrar a análise de custos fixos vs. variáveis:
-  - "Segundo Martins (2018), esta classificação é fundamental para decisões gerenciais, pois custos fixos permanecem independentemente do volume de serviços"
-  - "O alto percentual de custos fixos (acima de 70%) indica menor flexibilidade operacional e maior risco em períodos de baixa receita"
-
-- Na análise de sazonalidade:
-  - "Esta visualização permite identificar padrões recorrentes ao longo do ano, essencial para o planejamento financeiro da agência"
-
-**Aba Fluxo de Caixa:**
-- Ao apresentar o fluxo de caixa:
-  - "O saldo acumulado positivo/negativo indica a capacidade da empresa de honrar seus compromissos financeiros"
-  - "Esta análise é crucial para a liquidez, conforme destaca Pereira da Silva"
-
-**Aba Detalhamento por Categoria:**
-- Ao mostrar os treemaps:
-  - "Esta visualização hierárquica permite identificar rapidamente quais categorias e naturezas específicas têm maior impacto no resultado"
-  - "Por exemplo, podemos ver que a categoria X representa Y% das despesas totais"
-
-### 4. Conclusão (2-3 minutos)
-
-- Ressalte como o sistema integra teoria contábil e prática gerencial
-- Destaque os principais benefícios para a gestão da agência:
-  - Visibilidade sobre a estrutura de custos
-  - Monitoramento de fluxo de caixa
-  - Análise de rentabilidade
-- Mencione possíveis evoluções futuras do sistema
-
----
-
-## Conceitos-Chave para Destacar
-
-Durante a apresentação, certifique-se de enfatizar estes conceitos fundamentais:
-
-### De Pereira da Silva (2017):
-
-1. **Análise Vertical**: Representação proporcional dos componentes financeiros em relação a um total (ex: cada despesa como percentual da receita total).
-
-2. **Margem Líquida**: Indicador que mostra quanto da receita se converte efetivamente em lucro após todas as despesas.
-
-3. **Liquidez**: Capacidade da empresa de honrar seus compromissos financeiros no curto prazo, visualizada através do fluxo de caixa.
-
-### De Martins (2018):
-
-1. **Custos Fixos vs. Variáveis**: Distinção fundamental entre custos que independem do volume de serviços (fixos) e aqueles diretamente relacionados ao volume (variáveis).
-
-2. **Índice de Fixação**: Percentual de custos fixos em relação ao total, indicando o grau de rigidez da estrutura de custos da empresa.
-
-3. **Estrutura de Custos**: Composição dos custos da empresa e seu impacto nas decisões gerenciais e na rentabilidade do negócio.
-
----
-
-## Observações Finais
-
-Este guia oferece uma estrutura para a apresentação do projeto, destacando os conceitos contábeis incorporados ao sistema. Adapte o conteúdo conforme necessário, enfatizando os aspectos mais relevantes para o contexto específico da disciplina de Contabilidade.
-
-Lembre-se de que o objetivo principal é demonstrar como os conceitos teóricos de Pereira da Silva e Martins foram traduzidos em funcionalidades práticas no sistema, proporcionando ferramentas de análise financeira para a gestão de agências de publicidade.
+- **Análise Vertical**: Representação de cada item como percentual de um valor base (receita total)
+- **Margem Líquida**: Percentual do lucro em relação à receita
+- **Índice de Liquidez**: Capacidade da empresa de honrar compromissos financeiros
+- **Custos Fixos**: Custos que independem do volume de atividade
+- **Custos Variáveis**: Custos que variam proporcionalmente ao volume de serviços
+- **Índice de Fixação**: Percentual de custos fixos em relação ao total
+- **Análise de Tendência**: Estudo da evolução de indicadores ao longo do tempo
