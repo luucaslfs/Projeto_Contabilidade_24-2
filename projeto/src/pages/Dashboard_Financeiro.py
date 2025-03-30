@@ -7,6 +7,8 @@ import calendar
 import sys
 import os
 from dateutil.relativedelta import relativedelta
+from report_generator import gerar_relatorio_financeiro, criar_link_download
+
 
 # Adiciona o diretório src ao path para poder importar os módulos
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -809,18 +811,45 @@ def main():
                 st.info("ℹ️ Não há movimentações para o período selecionado.")
         else:
             st.info("ℹ️ Não há movimentações para análise.")
-    
-    # Botões no rodapé
+
     st.write("---")
-    col1, col2 = st.columns(2)
+    st.subheader("Exportar Relatório")
+    
+    col1, col2 = st.columns([3, 1])
     
     with col1:
-        if st.button("Importar Mais Dados"):
-            st.switch_page("pages/importacao_dados.py")
+        st.write("""
+        Gere um relatório financeiro completo em PDF com os dados do período selecionado.
+        O relatório incluirá todos os indicadores, análises e gráficos apresentados no dashboard.
+        """)
     
     with col2:
-        if st.button("Verificar Status do Banco"):
-            st.switch_page("pages/db_status.py")
+        if st.button("📄 Gerar Relatório PDF", type="primary"):
+            # Verifica se há dados suficientes
+            if not df_movimentacoes.empty or not df_despesas.empty or not df_faturas.empty:
+                with st.spinner("Gerando relatório financeiro..."):
+                    try:
+                        # Gera um nome de arquivo baseado no período
+                        nome_arquivo = f"Relatorio_Financeiro_{periodo_inicio.strftime('%d%m%Y')}_a_{periodo_fim.strftime('%d%m%Y')}.pdf"
+                        
+                        # Chama a função para gerar o relatório
+                        base64_pdf = gerar_relatorio_financeiro(
+                            dados_metricas=metricas,
+                            periodo_inicio=periodo_inicio,
+                            periodo_fim=periodo_fim
+                        )
+                        
+                        # Cria o link para download
+                        st.markdown(
+                            criar_link_download(base64_pdf, nome_arquivo),
+                            unsafe_allow_html=True
+                        )
+                        
+                        st.success(f"✅ Relatório gerado com sucesso!")
+                    except Exception as e:
+                        st.error(f"❌ Erro ao gerar relatório: {str(e)}")
+            else:
+                st.warning("⚠️ Não há dados suficientes para gerar o relatório. Por favor, importe ou cadastre dados.")
 
 if __name__ == "__main__":
     main()
