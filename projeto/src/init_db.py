@@ -4,7 +4,7 @@ import sys
 # Adiciona o diretório atual ao path para poder importar os módulos
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from database import engine, test_connection
+from database import engine, test_connection, IS_SQLITE
 from models import Base, Cliente, Servico, Despesa, Fatura, StatusServico
 from sqlalchemy import text
 
@@ -25,10 +25,13 @@ def init_db():
         # Verifica se as tabelas foram criadas
         with engine.connect() as conn:
             # Lista as tabelas no banco
-            result = conn.execute(text("""
-                SELECT table_name FROM information_schema.tables
-                WHERE table_schema = 'public'
-            """))
+            if IS_SQLITE:
+                result = conn.execute(text("SELECT name FROM sqlite_master WHERE type='table'"))
+            else:
+                result = conn.execute(text("""
+                    SELECT table_name FROM information_schema.tables
+                    WHERE table_schema = 'public'
+                """))
             tables = [row[0] for row in result]
             print(f"Tabelas existentes no banco: {', '.join(tables)}")
         
@@ -133,42 +136,38 @@ def insert_sample_data():
         # Cria algumas faturas de exemplo
         fatura1 = Fatura(
             cliente_id=cliente1.id,
-            servico_id=servico1.id,  # Agora temos o ID real do serviço
-            mes_referencia=date.today().replace(day=1) - timedelta(days=30),  # Mês anterior
-            data_emissao=date.today().replace(day=5),                        # Emitida no dia 5 do mês atual
+            servico_id=servico1.id,
+            mes_referencia=date.today().replace(day=1) - timedelta(days=30),
+            data_emissao=date.today().replace(day=5),
             valor=servico1.valor_mensal,
             status="pendente"
         )
         
         fatura2 = Fatura(
             cliente_id=cliente2.id,
-            servico_id=servico2.id,  # Agora temos o ID real do serviço
-            mes_referencia=date.today().replace(day=1) - timedelta(days=30),  # Mês anterior
-            data_emissao=date.today().replace(day=5),                        # Emitida no dia 5 do mês atual
+            servico_id=servico2.id,
+            mes_referencia=date.today().replace(day=1) - timedelta(days=30),
+            data_emissao=date.today().replace(day=5),
             valor=servico2.valor_mensal,
             status="pago"
         )
         
-        # Adiciona e commita as faturas SEPARADAMENTE para diagnóstico de erros
-        db.add(fatura1)
+        # Adiciona as faturas (com tratamento de erro individual)
         try:
-            db.flush()  # Tenta fazer flush para ver se há erros
-            print(f"Fatura 1 adicionada com sucesso.")
+            db.add(fatura1)
+            db.flush()
+            print("Fatura 1 adicionada com sucesso.")
         except Exception as e:
             db.rollback()
             print(f"Erro ao adicionar fatura 1: {e}")
-            import traceback
-            traceback.print_exc()
         
-        db.add(fatura2)
         try:
-            db.commit()  # Commit final
-            print(f"Faturas criadas com sucesso!")
+            db.add(fatura2)
+            db.commit()
+            print("Fatura 2 adicionada com sucesso.")
         except Exception as e:
             db.rollback()
             print(f"Erro ao adicionar fatura 2: {e}")
-            import traceback
-            traceback.print_exc()
             return False
         
         print("Dados de exemplo inseridos com sucesso!")
@@ -186,31 +185,16 @@ if __name__ == "__main__":
     if init_db():
         print("Banco de dados inicializado com sucesso!")
         
-        # Verifica se estamos rodando em ambiente de produção ou automatizado
-        is_automated = os.environ.get('AUTOMATED_SETUP', 'false').lower() == 'true'
-        
-        if is_automated:
-            # Em modo automatizado, insere dados de exemplo sem perguntar
-            print("Modo automatizado detectado. Inserindo dados de exemplo...")
-            if insert_sample_data():
-                print("Dados de exemplo inseridos com sucesso!")
-            else:
-                print("Erro ao inserir dados de exemplo.")
-        else:
-            # Em modo interativo, pergunta ao usuário
-            try:
-                resposta = input("Deseja inserir dados de exemplo para testes? (s/n): ")
-                if resposta.lower() == 's':
-                    if insert_sample_data():
-                        print("Dados de exemplo inseridos com sucesso!")
-                    else:
-                        print("Erro ao inserir dados de exemplo.")
-            except EOFError:
-                # Handle EOF (quando não há terminal interativo)
-                print("Modo não-interativo detectado. Inserindo dados de exemplo...")
+        # Em modo interativo, pergunta ao usuário se deseja inserir dados
+        try:
+            resposta = input("Deseja inserir dados de exemplo para testes? (s/n): ")
+            if resposta.lower() == 's':
                 if insert_sample_data():
                     print("Dados de exemplo inseridos com sucesso!")
                 else:
                     print("Erro ao inserir dados de exemplo.")
+        except EOFError:
+            # Em caso de execução não-interativa, não insere dados
+            print("Modo não-interativo detectado. Nenhum dado de exemplo será inserido.")
     else:
-        print("Erro ao inicializar o banco de dados.") 
+        print("Erro ao inicializar o banco de dados.")

@@ -5,6 +5,7 @@ import os
 import tempfile
 import re
 from datetime import datetime
+from database import IS_SQLITE, DB_TYPE
 from io import StringIO
 
 # Adiciona o diretório src ao path para poder importar os módulos
@@ -274,9 +275,13 @@ def main():
         st.error("❌ Não foi possível conectar ao banco de dados!")
         
         if st.button("Verificar Status do Banco"):
-            st.switch_page("pages/db_status.py")
+            st.switch_page("pages/Diagnostico_do_Banco_de_Dados.py")
         
         return
+    
+    # Adiciona informação sobre o tipo de banco
+    if IS_SQLITE:
+        st.info(f"📊 Usando banco de dados {DB_TYPE}. Os dados serão armazenados localmente.")
     
     st.write("""
     ### Importação de Dados Contábeis

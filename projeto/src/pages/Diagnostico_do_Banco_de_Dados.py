@@ -81,17 +81,23 @@ if st.button("Obter Metadados"):
                             st.write(f"- {column['name']} ({column['type']})")
                         
                         # Obtém as chaves primárias
-                        pk = inspector.get_pk_constraint(table)
-                        if pk['constrained_columns']:
-                            st.write("**Chave Primária:**")
-                            st.write(f"- {', '.join(pk['constrained_columns'])}")
+                        try:
+                            pk = inspector.get_pk_constraint(table)
+                            if pk and pk.get('constrained_columns'):
+                                st.write("**Chave Primária:**")
+                                st.write(f"- {', '.join(pk['constrained_columns'])}")
+                        except Exception as e:
+                            st.info(f"Informações da chave primária não disponíveis: {str(e)}")
                         
                         # Obtém as chaves estrangeiras
-                        fks = inspector.get_foreign_keys(table)
-                        if fks:
-                            st.write("**Chaves Estrangeiras:**")
-                            for fk in fks:
-                                st.write(f"- {', '.join(fk['constrained_columns'])} → {fk['referred_table']}.{', '.join(fk['referred_columns'])}")
+                        try:
+                            fks = inspector.get_foreign_keys(table)
+                            if fks:
+                                st.write("**Chaves Estrangeiras:**")
+                                for fk in fks:
+                                    st.write(f"- {', '.join(fk['constrained_columns'])} → {fk['referred_table']}.{', '.join(fk['referred_columns'])}")
+                        except Exception as e:
+                            st.info(f"Informações de chaves estrangeiras não disponíveis: {str(e)}")
                         
                         # Contagem de registros
                         try:

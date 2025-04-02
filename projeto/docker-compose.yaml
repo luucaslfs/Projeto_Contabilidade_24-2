@@ -17,28 +17,10 @@ services:
           action: sync
     ports:
       - "8501:8501"
-    environment:
-      - DATABASE_URL=postgresql://user:password@db:5432/agency_accounting
-    depends_on:
-      db:
-        condition: service_healthy
-
-  db:
-    image: postgres:14-alpine
-    restart: unless-stopped
-    environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=agency_accounting
-    ports:
-      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user -d agency_accounting"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      - sqlite_data:/app/data
+    environment:
+      - DATABASE_URL=sqlite:////app/data/agency_accounting.db
 
 volumes:
-  postgres_data:
+  sqlite_data:
