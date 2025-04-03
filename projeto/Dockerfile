@@ -12,4 +12,4 @@ RUN pip install -r requirements.txt
 RUN python src/init_db.py < /dev/null || echo "Banco será inicializado durante a execução"
 
 # Executa a aplicação Streamlit
-CMD ["streamlit", "run", "src/main.py"]
+CMD ["streamlit", "run", "src/main.py", "--server.port=8080", "--server.address=0.0.0.0"]
